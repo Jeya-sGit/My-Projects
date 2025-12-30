@@ -24,7 +24,7 @@ pipeline {
     stages {
         stage('Terraform Init') {
             steps {
-                dir('aws-deployment-bastion') {
+                dir('aws-HA-InfrawithBastion') {
                     bat "\"${TF_HOME}\\terraform.exe\" init -upgrade"
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
 
         stage('Terraform Action') {
             steps {
-                dir('aws-deployment-bastion') {
+                dir('aws-HA-InfrawithBastion') {
                     script {
                         if (params.TF_ACTION == 'plan') {
                             bat "\"${TF_HOME}\\terraform.exe\" plan -out=tfplan"
