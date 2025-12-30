@@ -1,0 +1,1122 @@
+Started by user JEYA NAGARAJA J
+ > git.exe rev-parse --resolve-git-dir C:\Users\hp\.jenkins\caches\git-84344dec862deed310d71731c7f5589c\.git # timeout=10
+Setting origin to https://github.com/Jeya-sGit/Jenkins.git
+ > git.exe config remote.origin.url https://github.com/Jeya-sGit/Jenkins.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.51.0.windows.1'
+ > git.exe config --get remote.origin.url # timeout=10
+using GIT_ASKPASS to set credentials My GitHub access
+ > git.exe fetch --no-tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/feature/Bastion-JenkinsFix
+Seen branch in repository origin/feature/aws-deployment-bastion
+Seen branch in repository origin/feature/awsS3
+Seen branch in repository origin/feature/awsS3-JenkinsFix
+Seen branch in repository origin/main
+Seen 5 remote branches
+Obtained aws-deployment-bastion/Jenkinsfile from 1faff9c841b6327e1f8fb6b6bc81561da1f0620e
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\Users\hp\.jenkins\workspace\aws-HA-infra_with_Bastion_main
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential github-creds
+ > git.exe rev-parse --resolve-git-dir C:\Users\hp\.jenkins\workspace\aws-HA-infra_with_Bastion_main\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/Jeya-sGit/Jenkins.git # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/Jeya-sGit/Jenkins.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.51.0.windows.1'
+using GIT_ASKPASS to set credentials My GitHub access
+ > git.exe fetch --no-tags --force --progress -- https://github.com/Jeya-sGit/Jenkins.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision 1faff9c841b6327e1f8fb6b6bc81561da1f0620e (main)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f 1faff9c841b6327e1f8fb6b6bc81561da1f0620e # timeout=10
+Commit message: "Merge pull request #4 from Jeya-sGit/feature/Bastion-JenkinsFix"
+ > git.exe rev-list --no-walk 1faff9c841b6327e1f8fb6b6bc81561da1f0620e # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of %AWS_ACCESS_KEY_ID% or %AWS_SECRET_ACCESS_KEY%
+[Pipeline] {
+[Pipeline] tool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] ansiColor
+[Pipeline] {
+
+[Pipeline] stage
+[Pipeline] { (Terraform Init)
+[Pipeline] dir
+Running in C:\Users\hp\.jenkins\workspace\aws-HA-infra_with_Bastion_main\aws-deployment-bastion
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\hp\.jenkins\workspace\aws-HA-infra_with_Bastion_main\aws-deployment-bastion>"D:\Developer's Tool\terraform.exe" init -upgrade 
+[0m[1mInitializing the backend...[0m
+[0m[1mUpgrading modules...[0m
+Downloading git::https://github.com/Jeya-sGit/Terraform.git?ref=main for compute...
+- compute in .terraform\modules\compute\aws-vpc-asg-infra-modular\modules\compute
+Downloading git::https://github.com/Jeya-sGit/Terraform.git?ref=main for vpc...
+- vpc in .terraform\modules\vpc\aws-vpc-asg-infra-modular\modules\vpc
+[0m[1mInitializing provider plugins...[0m
+- Finding hashicorp/aws versions matching "~> 6.0"...
+- Finding latest version of hashicorp/local...
+- Finding latest version of hashicorp/tls...
+- Using previously-installed hashicorp/aws v6.27.0
+- Using previously-installed hashicorp/local v2.6.1
+- Using previously-installed hashicorp/tls v4.1.0
+
+[0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.[0m
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Terraform Action)
+[Pipeline] dir
+Running in C:\Users\hp\.jenkins\workspace\aws-HA-infra_with_Bastion_main\aws-deployment-bastion
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] input
+Apply these changes to AWS?
+Proceed or Abort
+Approved by JEYA NAGARAJA J
+[Pipeline] bat
+
+C:\Users\hp\.jenkins\workspace\aws-HA-infra_with_Bastion_main\aws-deployment-bastion>"D:\Developer's Tool\terraform.exe" apply -auto-approve 
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+ [36m<=[0m read (data resources)[0m
+
+Terraform will perform the following actions:
+
+[1m  # data.aws_instances.asg_instances[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_instances" "asg_instances" {
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m ids                  = (known after apply)
+      [32m+[0m[0m instance_state_names = [
+          [32m+[0m[0m "running",
+        ]
+      [32m+[0m[0m instance_tags        = (known after apply)
+      [32m+[0m[0m ipv6_addresses       = (known after apply)
+      [32m+[0m[0m private_ips          = (known after apply)
+      [32m+[0m[0m public_ips           = (known after apply)
+      [32m+[0m[0m region               = (known after apply)
+
+      [32m+[0m[0m filter {
+          [32m+[0m[0m name   = "tag:Name"
+          [32m+[0m[0m values = [
+              [32m+[0m[0m "terraform-created-EC2-Instance",
+            ]
+        }
+    }
+
+[1m  # aws_instance.bastion[0m will be created
+[0m  [32m+[0m[0m resource "aws_instance" "bastion" {
+      [32m+[0m[0m ami                                  = "ami-0d176f79571d18a8f"
+      [32m+[0m[0m arn                                  = (known after apply)
+      [32m+[0m[0m associate_public_ip_address          = true
+      [32m+[0m[0m availability_zone                    = (known after apply)
+      [32m+[0m[0m disable_api_stop                     = (known after apply)
+      [32m+[0m[0m disable_api_termination              = (known after apply)
+      [32m+[0m[0m ebs_optimized                        = (known after apply)
+      [32m+[0m[0m enable_primary_ipv6                  = (known after apply)
+      [32m+[0m[0m force_destroy                        = false
+      [32m+[0m[0m get_password_data                    = false
+      [32m+[0m[0m host_id                              = (known after apply)
+      [32m+[0m[0m host_resource_group_arn              = (known after apply)
+      [32m+[0m[0m iam_instance_profile                 = (known after apply)
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m instance_initiated_shutdown_behavior = (known after apply)
+      [32m+[0m[0m instance_lifecycle                   = (known after apply)
+      [32m+[0m[0m instance_state                       = (known after apply)
+      [32m+[0m[0m instance_type                        = "t2.micro"
+      [32m+[0m[0m ipv6_address_count                   = (known after apply)
+      [32m+[0m[0m ipv6_addresses                       = (known after apply)
+      [32m+[0m[0m key_name                             = "AWS-HA-App-key"
+      [32m+[0m[0m monitoring                           = (known after apply)
+      [32m+[0m[0m outpost_arn                          = (known after apply)
+      [32m+[0m[0m password_data                        = (known after apply)
+      [32m+[0m[0m placement_group                      = (known after apply)
+      [32m+[0m[0m placement_group_id                   = (known after apply)
+      [32m+[0m[0m placement_partition_number           = (known after apply)
+      [32m+[0m[0m primary_network_interface_id         = (known after apply)
+      [32m+[0m[0m private_dns                          = (known after apply)
+      [32m+[0m[0m private_ip                           = (known after apply)
+      [32m+[0m[0m public_dns                           = (known after apply)
+      [32m+[0m[0m public_ip                            = (known after apply)
+      [32m+[0m[0m region                               = "ap-south-1"
+      [32m+[0m[0m secondary_private_ips                = (known after apply)
+      [32m+[0m[0m security_groups                      = (known after apply)
+      [32m+[0m[0m source_dest_check                    = true
+      [32m+[0m[0m spot_instance_request_id             = (known after apply)
+      [32m+[0m[0m subnet_id                            = (known after apply)
+      [32m+[0m[0m tags                                 = {
+          [32m+[0m[0m "Name" = "AWS-HA-App-bastion"
+        }
+      [32m+[0m[0m tags_all                             = {
+          [32m+[0m[0m "Name" = "AWS-HA-App-bastion"
+        }
+      [32m+[0m[0m tenancy                              = (known after apply)
+      [32m+[0m[0m user_data_base64                     = (known after apply)
+      [32m+[0m[0m user_data_replace_on_change          = false
+      [32m+[0m[0m vpc_security_group_ids               = (known after apply)
+
+      [32m+[0m[0m capacity_reservation_specification (known after apply)
+
+      [32m+[0m[0m cpu_options (known after apply)
+
+      [32m+[0m[0m ebs_block_device (known after apply)
+
+      [32m+[0m[0m enclave_options (known after apply)
+
+      [32m+[0m[0m ephemeral_block_device (known after apply)
+
+      [32m+[0m[0m instance_market_options (known after apply)
+
+      [32m+[0m[0m maintenance_options (known after apply)
+
+      [32m+[0m[0m metadata_options (known after apply)
+
+      [32m+[0m[0m network_interface (known after apply)
+
+      [32m+[0m[0m primary_network_interface (known after apply)
+
+      [32m+[0m[0m private_dns_name_options (known after apply)
+
+      [32m+[0m[0m root_block_device (known after apply)
+    }
+
+[1m  # aws_key_pair.vpc_key[0m will be created
+[0m  [32m+[0m[0m resource "aws_key_pair" "vpc_key" {
+      [32m+[0m[0m arn             = (known after apply)
+      [32m+[0m[0m fingerprint     = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m key_name        = "AWS-HA-App-key"
+      [32m+[0m[0m key_name_prefix = (known after apply)
+      [32m+[0m[0m key_pair_id     = (known after apply)
+      [32m+[0m[0m key_type        = (known after apply)
+      [32m+[0m[0m public_key      = (known after apply)
+      [32m+[0m[0m region          = "ap-south-1"
+      [32m+[0m[0m tags_all        = (known after apply)
+    }
+
+[1m  # aws_security_group.bastion_sg[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "bastion_sg" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Bastion security group"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m from_port        = 22
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 22
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m name                   = "AWS-HA-App-bastion-sg"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m region                 = "ap-south-1"
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Name" = "AWS-HA-App-bastion-sg"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Name" = "AWS-HA-App-bastion-sg"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # local_file.private_key[0m will be created
+[0m  [32m+[0m[0m resource "local_file" "private_key" {
+      [32m+[0m[0m content              = (sensitive value)
+      [32m+[0m[0m content_base64sha256 = (known after apply)
+      [32m+[0m[0m content_base64sha512 = (known after apply)
+      [32m+[0m[0m content_md5          = (known after apply)
+      [32m+[0m[0m content_sha1         = (known after apply)
+      [32m+[0m[0m content_sha256       = (known after apply)
+      [32m+[0m[0m content_sha512       = (known after apply)
+      [32m+[0m[0m directory_permission = "0777"
+      [32m+[0m[0m file_permission      = "0400"
+      [32m+[0m[0m filename             = "AWS-HA-App-key.pem"
+      [32m+[0m[0m id                   = (known after apply)
+    }
+
+[1m  # tls_private_key.rsa[0m will be created
+[0m  [32m+[0m[0m resource "tls_private_key" "rsa" {
+      [32m+[0m[0m algorithm                     = "RSA"
+      [32m+[0m[0m ecdsa_curve                   = "P224"
+      [32m+[0m[0m id                            = (known after apply)
+      [32m+[0m[0m private_key_openssh           = (sensitive value)
+      [32m+[0m[0m private_key_pem               = (sensitive value)
+      [32m+[0m[0m private_key_pem_pkcs8         = (sensitive value)
+      [32m+[0m[0m public_key_fingerprint_md5    = (known after apply)
+      [32m+[0m[0m public_key_fingerprint_sha256 = (known after apply)
+      [32m+[0m[0m public_key_openssh            = (known after apply)
+      [32m+[0m[0m public_key_pem                = (known after apply)
+      [32m+[0m[0m rsa_bits                      = 4096
+    }
+
+[1m  # module.compute.aws_alb.App_LB[0m will be created
+[0m  [32m+[0m[0m resource "aws_alb" "App_LB" {
+      [32m+[0m[0m arn                                                          = (known after apply)
+      [32m+[0m[0m arn_suffix                                                   = (known after apply)
+      [32m+[0m[0m client_keep_alive                                            = 3600
+      [32m+[0m[0m desync_mitigation_mode                                       = "defensive"
+      [32m+[0m[0m dns_name                                                     = (known after apply)
+      [32m+[0m[0m drop_invalid_header_fields                                   = false
+      [32m+[0m[0m enable_deletion_protection                                   = false
+      [32m+[0m[0m enable_http2                                                 = true
+      [32m+[0m[0m enable_tls_version_and_cipher_suite_headers                  = false
+      [32m+[0m[0m enable_waf_fail_open                                         = false
+      [32m+[0m[0m enable_xff_client_port                                       = false
+      [32m+[0m[0m enable_zonal_shift                                           = false
+      [32m+[0m[0m enforce_security_group_inbound_rules_on_private_link_traffic = (known after apply)
+      [32m+[0m[0m id                                                           = (known after apply)
+      [32m+[0m[0m idle_timeout                                                 = 60
+      [32m+[0m[0m internal                                                     = false
+      [32m+[0m[0m ip_address_type                                              = (known after apply)
+      [32m+[0m[0m load_balancer_type                                           = "application"
+      [32m+[0m[0m name                                                         = "AWS-HA-App-AppLoadBalancer"
+      [32m+[0m[0m name_prefix                                                  = (known after apply)
+      [32m+[0m[0m preserve_host_header                                         = false
+      [32m+[0m[0m region                                                       = "ap-south-1"
+      [32m+[0m[0m secondary_ips_auto_assigned_per_subnet                       = (known after apply)
+      [32m+[0m[0m security_groups                                              = (known after apply)
+      [32m+[0m[0m subnets                                                      = (known after apply)
+      [32m+[0m[0m tags                                                         = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB"
+        }
+      [32m+[0m[0m tags_all                                                     = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB"
+        }
+      [32m+[0m[0m vpc_id                                                       = (known after apply)
+      [32m+[0m[0m xff_header_processing_mode                                   = "append"
+      [32m+[0m[0m zone_id                                                      = (known after apply)
+
+      [32m+[0m[0m subnet_mapping (known after apply)
+    }
+
+[1m  # module.compute.aws_autoscaling_group.ASG-EC2[0m will be created
+[0m  [32m+[0m[0m resource "aws_autoscaling_group" "ASG-EC2" {
+      [32m+[0m[0m arn                              = (known after apply)
+      [32m+[0m[0m availability_zones               = (known after apply)
+      [32m+[0m[0m default_cooldown                 = (known after apply)
+      [32m+[0m[0m desired_capacity                 = 2
+      [32m+[0m[0m force_delete                     = false
+      [32m+[0m[0m force_delete_warm_pool           = false
+      [32m+[0m[0m health_check_grace_period        = 300
+      [32m+[0m[0m health_check_type                = "ELB"
+      [32m+[0m[0m id                               = (known after apply)
+      [32m+[0m[0m ignore_failed_scaling_activities = false
+      [32m+[0m[0m load_balancers                   = (known after apply)
+      [32m+[0m[0m max_size                         = 3
+      [32m+[0m[0m metrics_granularity              = "1Minute"
+      [32m+[0m[0m min_size                         = 2
+      [32m+[0m[0m name                             = (known after apply)
+      [32m+[0m[0m name_prefix                      = (known after apply)
+      [32m+[0m[0m predicted_capacity               = (known after apply)
+      [32m+[0m[0m protect_from_scale_in            = false
+      [32m+[0m[0m region                           = "ap-south-1"
+      [32m+[0m[0m service_linked_role_arn          = (known after apply)
+      [32m+[0m[0m target_group_arns                = (known after apply)
+      [32m+[0m[0m vpc_zone_identifier              = (known after apply)
+      [32m+[0m[0m wait_for_capacity_timeout        = "10m"
+      [32m+[0m[0m warm_pool_size                   = (known after apply)
+
+      [32m+[0m[0m availability_zone_distribution (known after apply)
+
+      [32m+[0m[0m capacity_reservation_specification (known after apply)
+
+      [32m+[0m[0m launch_template {
+          [32m+[0m[0m id      = (known after apply)
+          [32m+[0m[0m name    = (known after apply)
+          [32m+[0m[0m version = "$Latest"
+        }
+
+      [32m+[0m[0m mixed_instances_policy (known after apply)
+
+      [32m+[0m[0m traffic_source (known after apply)
+    }
+
+[1m  # module.compute.aws_launch_template.EC2_Launch_Template[0m will be created
+[0m  [32m+[0m[0m resource "aws_launch_template" "EC2_Launch_Template" {
+      [32m+[0m[0m arn             = (known after apply)
+      [32m+[0m[0m default_version = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m image_id        = "ami-0d176f79571d18a8f"
+      [32m+[0m[0m instance_type   = "t2.micro"
+      [32m+[0m[0m key_name        = "AWS-HA-App-key"
+      [32m+[0m[0m latest_version  = (known after apply)
+      [32m+[0m[0m name            = "AWS-HA-App-WebServer"
+      [32m+[0m[0m name_prefix     = (known after apply)
+      [32m+[0m[0m region          = "ap-south-1"
+      [32m+[0m[0m tags_all        = (known after apply)
+      [32m+[0m[0m user_data       = "IyEvYmluL2Jhc2gNCnl1bSB1cGRhdGUgLXkNCnl1bSBpbnN0YWxsIGh0dHBkIC15DQpzeXN0ZW1jdGwgc3RhcnQgaHR0cGQgDQpzeXN0ZW1jdGwgZW5hYmxlIGh0dHBkIA0KZWNobyAiPGgxPkhlbGxvIGZyb20gJChob3N0bmFtZSAtZikgLSBEZXBsb3llZCB2aWEgVGVycmFmb3JtPC9oMT4iID4gL3Zhci93d3cvaHRtbC9pbmRleC5odG1s"
+
+      [32m+[0m[0m metadata_options (known after apply)
+
+      [32m+[0m[0m network_interfaces {
+          [32m+[0m[0m associate_public_ip_address = "false"
+          [32m+[0m[0m security_groups             = (known after apply)
+        }
+
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "instance"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Name" = "terraform-created-EC2-Instance"
+            }
+        }
+    }
+
+[1m  # module.compute.aws_lb_listener.ALB-Listener[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_listener" "ALB-Listener" {
+      [32m+[0m[0m arn                                                                   = (known after apply)
+      [32m+[0m[0m id                                                                    = (known after apply)
+      [32m+[0m[0m load_balancer_arn                                                     = (known after apply)
+      [32m+[0m[0m port                                                                  = 80
+      [32m+[0m[0m protocol                                                              = "HTTP"
+      [32m+[0m[0m region                                                                = "ap-south-1"
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_header_name               = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_issuer_header_name        = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_leaf_header_name          = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_subject_header_name       = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_mtls_clientcert_validity_header_name      = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_tls_cipher_suite_header_name              = (known after apply)
+      [32m+[0m[0m routing_http_request_x_amzn_tls_version_header_name                   = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_credentials_header_value   = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_headers_header_value       = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_methods_header_value       = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_allow_origin_header_value        = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_expose_headers_header_value      = (known after apply)
+      [32m+[0m[0m routing_http_response_access_control_max_age_header_value             = (known after apply)
+      [32m+[0m[0m routing_http_response_content_security_policy_header_value            = (known after apply)
+      [32m+[0m[0m routing_http_response_server_enabled                                  = (known after apply)
+      [32m+[0m[0m routing_http_response_strict_transport_security_header_value          = (known after apply)
+      [32m+[0m[0m routing_http_response_x_content_type_options_header_value             = (known after apply)
+      [32m+[0m[0m routing_http_response_x_frame_options_header_value                    = (known after apply)
+      [32m+[0m[0m ssl_policy                                                            = (known after apply)
+      [32m+[0m[0m tags                                                                  = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB-Listener"
+        }
+      [32m+[0m[0m tags_all                                                              = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB-Listener"
+        }
+      [32m+[0m[0m tcp_idle_timeout_seconds                                              = (known after apply)
+
+      [32m+[0m[0m default_action {
+          [32m+[0m[0m order            = (known after apply)
+          [32m+[0m[0m target_group_arn = (known after apply)
+          [32m+[0m[0m type             = "forward"
+        }
+
+      [32m+[0m[0m mutual_authentication (known after apply)
+    }
+
+[1m  # module.compute.aws_lb_target_group.App_LB-EC2-TG[0m will be created
+[0m  [32m+[0m[0m resource "aws_lb_target_group" "App_LB-EC2-TG" {
+      [32m+[0m[0m arn                                = (known after apply)
+      [32m+[0m[0m arn_suffix                         = (known after apply)
+      [32m+[0m[0m connection_termination             = (known after apply)
+      [32m+[0m[0m deregistration_delay               = "300"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m ip_address_type                    = (known after apply)
+      [32m+[0m[0m lambda_multi_value_headers_enabled = false
+      [32m+[0m[0m load_balancer_arns                 = (known after apply)
+      [32m+[0m[0m load_balancing_algorithm_type      = (known after apply)
+      [32m+[0m[0m load_balancing_anomaly_mitigation  = (known after apply)
+      [32m+[0m[0m load_balancing_cross_zone_enabled  = (known after apply)
+      [32m+[0m[0m name                               = "AWS-HA-App-AppLB-EC2-TG"
+      [32m+[0m[0m name_prefix                        = (known after apply)
+      [32m+[0m[0m port                               = 80
+      [32m+[0m[0m preserve_client_ip                 = (known after apply)
+      [32m+[0m[0m protocol                           = "HTTP"
+      [32m+[0m[0m protocol_version                   = (known after apply)
+      [32m+[0m[0m proxy_protocol_v2                  = false
+      [32m+[0m[0m region                             = "ap-south-1"
+      [32m+[0m[0m slow_start                         = 0
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB-EC2-TG"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB-EC2-TG"
+        }
+      [32m+[0m[0m target_type                        = "instance"
+      [32m+[0m[0m vpc_id                             = (known after apply)
+
+      [32m+[0m[0m health_check (known after apply)
+
+      [32m+[0m[0m stickiness (known after apply)
+
+      [32m+[0m[0m target_failover (known after apply)
+
+      [32m+[0m[0m target_group_health (known after apply)
+
+      [32m+[0m[0m target_health_state (known after apply)
+    }
+
+[1m  # module.compute.aws_security_group.ALB_SG[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "ALB_SG" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security Group for Application Load Balancer"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m from_port        = 80
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 80
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m name                   = "AWS-HA-App-ALB-SG"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m region                 = "ap-south-1"
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB-SG"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Name" = "terraform-created-ALB-SG"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.compute.aws_security_group.EC2-SG[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "EC2-SG" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security Group for EC2 Instances"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m from_port        = 22
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = (known after apply)
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 22
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m from_port        = 80
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = (known after apply)
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 80
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m name                   = "AWS-HA-App-EC2-Instance-SG"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m region                 = "ap-south-1"
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Name" = "terraform-created-EC2-SG"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Name" = "terraform-created-EC2-SG"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.vpc.aws_eip.eip_vpc[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_eip" "eip_vpc" {
+      [32m+[0m[0m allocation_id        = (known after apply)
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m association_id       = (known after apply)
+      [32m+[0m[0m carrier_ip           = (known after apply)
+      [32m+[0m[0m customer_owned_ip    = (known after apply)
+      [32m+[0m[0m domain               = "vpc"
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m instance             = (known after apply)
+      [32m+[0m[0m ipam_pool_id         = (known after apply)
+      [32m+[0m[0m network_border_group = (known after apply)
+      [32m+[0m[0m network_interface    = (known after apply)
+      [32m+[0m[0m private_dns          = (known after apply)
+      [32m+[0m[0m private_ip           = (known after apply)
+      [32m+[0m[0m ptr_record           = (known after apply)
+      [32m+[0m[0m public_dns           = (known after apply)
+      [32m+[0m[0m public_ip            = (known after apply)
+      [32m+[0m[0m public_ipv4_pool     = (known after apply)
+      [32m+[0m[0m region               = "ap-south-1"
+      [32m+[0m[0m tags                 = {
+          [32m+[0m[0m "Name" = "terraform-created-EIP 1"
+        }
+      [32m+[0m[0m tags_all             = {
+          [32m+[0m[0m "Name" = "terraform-created-EIP 1"
+        }
+    }
+
+[1m  # module.vpc.aws_eip.eip_vpc[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_eip" "eip_vpc" {
+      [32m+[0m[0m allocation_id        = (known after apply)
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m association_id       = (known after apply)
+      [32m+[0m[0m carrier_ip           = (known after apply)
+      [32m+[0m[0m customer_owned_ip    = (known after apply)
+      [32m+[0m[0m domain               = "vpc"
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m instance             = (known after apply)
+      [32m+[0m[0m ipam_pool_id         = (known after apply)
+      [32m+[0m[0m network_border_group = (known after apply)
+      [32m+[0m[0m network_interface    = (known after apply)
+      [32m+[0m[0m private_dns          = (known after apply)
+      [32m+[0m[0m private_ip           = (known after apply)
+      [32m+[0m[0m ptr_record           = (known after apply)
+      [32m+[0m[0m public_dns           = (known after apply)
+      [32m+[0m[0m public_ip            = (known after apply)
+      [32m+[0m[0m public_ipv4_pool     = (known after apply)
+      [32m+[0m[0m region               = "ap-south-1"
+      [32m+[0m[0m tags                 = {
+          [32m+[0m[0m "Name" = "terraform-created-EIP 2"
+        }
+      [32m+[0m[0m tags_all             = {
+          [32m+[0m[0m "Name" = "terraform-created-EIP 2"
+        }
+    }
+
+[1m  # module.vpc.aws_internet_gateway.IGW_Custom_VPC[0m will be created
+[0m  [32m+[0m[0m resource "aws_internet_gateway" "IGW_Custom_VPC" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m owner_id = (known after apply)
+      [32m+[0m[0m region   = "ap-south-1"
+      [32m+[0m[0m tags     = {
+          [32m+[0m[0m "Name" = "terraform-created-IGW"
+        }
+      [32m+[0m[0m tags_all = {
+          [32m+[0m[0m "Name" = "terraform-created-IGW"
+        }
+      [32m+[0m[0m vpc_id   = (known after apply)
+    }
+
+[1m  # module.vpc.aws_nat_gateway.NATGW_Custom_VPC[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_nat_gateway" "NATGW_Custom_VPC" {
+      [32m+[0m[0m allocation_id                      = (known after apply)
+      [32m+[0m[0m association_id                     = (known after apply)
+      [32m+[0m[0m auto_provision_zones               = (known after apply)
+      [32m+[0m[0m auto_scaling_ips                   = (known after apply)
+      [32m+[0m[0m availability_mode                  = (known after apply)
+      [32m+[0m[0m connectivity_type                  = "public"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m network_interface_id               = (known after apply)
+      [32m+[0m[0m private_ip                         = (known after apply)
+      [32m+[0m[0m public_ip                          = (known after apply)
+      [32m+[0m[0m region                             = "ap-south-1"
+      [32m+[0m[0m regional_nat_gateway_address       = (known after apply)
+      [32m+[0m[0m regional_nat_gateway_auto_mode     = (known after apply)
+      [32m+[0m[0m route_table_id                     = (known after apply)
+      [32m+[0m[0m secondary_allocation_ids           = (known after apply)
+      [32m+[0m[0m secondary_private_ip_address_count = (known after apply)
+      [32m+[0m[0m secondary_private_ip_addresses     = (known after apply)
+      [32m+[0m[0m subnet_id                          = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Name" = "terraform-created-NATGW 1"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Name" = "terraform-created-NATGW 1"
+        }
+      [32m+[0m[0m vpc_id                             = (known after apply)
+    }
+
+[1m  # module.vpc.aws_nat_gateway.NATGW_Custom_VPC[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_nat_gateway" "NATGW_Custom_VPC" {
+      [32m+[0m[0m allocation_id                      = (known after apply)
+      [32m+[0m[0m association_id                     = (known after apply)
+      [32m+[0m[0m auto_provision_zones               = (known after apply)
+      [32m+[0m[0m auto_scaling_ips                   = (known after apply)
+      [32m+[0m[0m availability_mode                  = (known after apply)
+      [32m+[0m[0m connectivity_type                  = "public"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m network_interface_id               = (known after apply)
+      [32m+[0m[0m private_ip                         = (known after apply)
+      [32m+[0m[0m public_ip                          = (known after apply)
+      [32m+[0m[0m region                             = "ap-south-1"
+      [32m+[0m[0m regional_nat_gateway_address       = (known after apply)
+      [32m+[0m[0m regional_nat_gateway_auto_mode     = (known after apply)
+      [32m+[0m[0m route_table_id                     = (known after apply)
+      [32m+[0m[0m secondary_allocation_ids           = (known after apply)
+      [32m+[0m[0m secondary_private_ip_address_count = (known after apply)
+      [32m+[0m[0m secondary_private_ip_addresses     = (known after apply)
+      [32m+[0m[0m subnet_id                          = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Name" = "terraform-created-NATGW 2"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Name" = "terraform-created-NATGW 2"
+        }
+      [32m+[0m[0m vpc_id                             = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table.PrivateSubnet_RT[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "PrivateSubnet_RT" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m region           = "ap-south-1"
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m gateway_id                 = (known after apply)
+                [90m# (11 unchanged attributes hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet-RT 1"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet-RT 1"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table.PrivateSubnet_RT[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "PrivateSubnet_RT" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m region           = "ap-south-1"
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m gateway_id                 = (known after apply)
+                [90m# (11 unchanged attributes hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet-RT 2"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet-RT 2"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table.PublicSubnet_RT[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "PublicSubnet_RT" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m region           = "ap-south-1"
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m gateway_id                 = (known after apply)
+                [90m# (11 unchanged attributes hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "terraform-created-PublicSubnet-RT"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "terraform-created-PublicSubnet-RT"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.PrivateSubnet_RTA[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "PrivateSubnet_RTA" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m region         = "ap-south-1"
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.PrivateSubnet_RTA[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "PrivateSubnet_RTA" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m region         = "ap-south-1"
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.PublicSubnet_RTA[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "PublicSubnet_RTA" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m region         = "ap-south-1"
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.PublicSubnet_RTA[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "PublicSubnet_RTA" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m region         = "ap-south-1"
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.Private_Subnet[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "Private_Subnet" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "ap-south-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.3.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m region                                         = "ap-south-1"
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet 1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet 1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.Private_Subnet[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "Private_Subnet" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "ap-south-1b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.4.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m region                                         = "ap-south-1"
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet 2"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "terraform-created-PrivateSubnet 2"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.Public_Subnet[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "Public_Subnet" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "ap-south-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.1.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m region                                         = "ap-south-1"
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "terraform-created-PublicSubnet 1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "terraform-created-PublicSubnet 1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.Public_Subnet[1][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "Public_Subnet" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "ap-south-1b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.2.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m region                                         = "ap-south-1"
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name" = "terraform-created-PublicSubnet 2"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name" = "terraform-created-PublicSubnet 2"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.vpc.aws_vpc.Custom_VPC[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc" "Custom_VPC" {
+      [32m+[0m[0m arn                                  = (known after apply)
+      [32m+[0m[0m cidr_block                           = "10.0.0.0/16"
+      [32m+[0m[0m default_network_acl_id               = (known after apply)
+      [32m+[0m[0m default_route_table_id               = (known after apply)
+      [32m+[0m[0m default_security_group_id            = (known after apply)
+      [32m+[0m[0m dhcp_options_id                      = (known after apply)
+      [32m+[0m[0m enable_dns_hostnames                 = true
+      [32m+[0m[0m enable_dns_support                   = true
+      [32m+[0m[0m enable_network_address_usage_metrics = (known after apply)
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m instance_tenancy                     = "default"
+      [32m+[0m[0m ipv6_association_id                  = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                      = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_network_border_group = (known after apply)
+      [32m+[0m[0m main_route_table_id                  = (known after apply)
+      [32m+[0m[0m owner_id                             = (known after apply)
+      [32m+[0m[0m region                               = "ap-south-1"
+      [32m+[0m[0m tags                                 = {
+          [32m+[0m[0m "Name" = "terraform_vpc"
+        }
+      [32m+[0m[0m tags_all                             = {
+          [32m+[0m[0m "Name" = "terraform_vpc"
+        }
+    }
+
+[1mPlan:[0m 29 to add, 0 to change, 0 to destroy.
+[0m
+Changes to Outputs:
+  [32m+[0m[0m alb_dns_endpoint     = (known after apply)
+  [32m+[0m[0m bastion_public_ip    = (known after apply)
+  [32m+[0m[0m jump_commands        = (known after apply)
+  [32m+[0m[0m private_instance_ips = (known after apply)
+  [32m+[0m[0m ssh_connect_command  = (known after apply)
+[0m[1mtls_private_key.rsa: Creating...[0m[0m
+[0m[1mtls_private_key.rsa: Creation complete after 1s [id=1a204accb56da6b05a0d7e91064b99f3080a4cce][0m
+[0m[1mmodule.vpc.aws_vpc.Custom_VPC: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_vpc.Custom_VPC: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_vpc.Custom_VPC: Creation complete after 13s [id=vpc-0def1a47303a7b7f3][0m
+[0m[1maws_key_pair.vpc_key: Creating...[0m[0m
+[0m[1maws_key_pair.vpc_key: Creation complete after 0s [id=AWS-HA-App-key][0m
+[0m[1mmodule.vpc.aws_internet_gateway.IGW_Custom_VPC: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_internet_gateway.IGW_Custom_VPC: Creation complete after 1s [id=igw-0056c3a9f48dfa610][0m
+[0m[1mmodule.vpc.aws_subnet.Public_Subnet[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_subnet.Public_Subnet[1]: Creation complete after 1s [id=subnet-0b75bbf72d3145d6d][0m
+[0m[1mmodule.vpc.aws_subnet.Public_Subnet[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_subnet.Public_Subnet[0]: Creation complete after 0s [id=subnet-0319dbc45e3a7abb5][0m
+[0m[1mmodule.vpc.aws_subnet.Private_Subnet[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_subnet.Private_Subnet[0]: Creation complete after 0s [id=subnet-060f5a70ed2760ad0][0m
+[0m[1mmodule.vpc.aws_subnet.Private_Subnet[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_subnet.Private_Subnet[1]: Creation complete after 1s [id=subnet-038b9fc69ad065dd3][0m
+[0m[1mlocal_file.private_key: Creating...[0m[0m
+[0m[1mlocal_file.private_key: Creation complete after 0s [id=1e2d04d53bfc7eaf62144c27e132d3268e4c94e7][0m
+[0m[1maws_security_group.bastion_sg: Creating...[0m[0m
+[0m[1maws_security_group.bastion_sg: Creation complete after 5s [id=sg-0f49da6c0940ee900][0m
+[0m[1mmodule.vpc.aws_route_table.PublicSubnet_RT: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table.PublicSubnet_RT: Creation complete after 2s [id=rtb-0022acbbfbd12b9e9][0m
+[0m[1mmodule.vpc.aws_eip.eip_vpc[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_eip.eip_vpc[0]: Creation complete after 1s [id=eipalloc-0e80cc35ca000ca13][0m
+[0m[1mmodule.vpc.aws_eip.eip_vpc[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_eip.eip_vpc[1]: Creation complete after 1s [id=eipalloc-0389fd3991d7594fb][0m
+[0m[1mmodule.compute.aws_security_group.ALB_SG: Creating...[0m[0m
+[0m[1mmodule.compute.aws_security_group.ALB_SG: Creation complete after 5s [id=sg-0eec6670b8b679cf1][0m
+[0m[1mmodule.compute.aws_lb_target_group.App_LB-EC2-TG: Creating...[0m[0m
+[0m[1mmodule.compute.aws_lb_target_group.App_LB-EC2-TG: Creation complete after 6s [id=arn:aws:elasticloadbalancing:ap-south-1:682033463215:targetgroup/AWS-HA-App-AppLB-EC2-TG/6c5334fab199446a][0m
+[0m[1mmodule.vpc.aws_route_table_association.PublicSubnet_RTA[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table_association.PublicSubnet_RTA[0]: Creation complete after 1s [id=rtbassoc-003cc49d4af4c3abe][0m
+[0m[1mmodule.vpc.aws_route_table_association.PublicSubnet_RTA[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table_association.PublicSubnet_RTA[1]: Creation complete after 2s [id=rtbassoc-048b27d1df8d870ef][0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [00m30s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [00m40s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [00m50s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [01m00s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [01m10s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [01m20s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [01m30s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [01m40s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Still creating... [01m50s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[0]: Creation complete after 1m53s [id=nat-0865b9f848b766088][0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [00m30s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [00m40s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [00m50s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [01m00s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [01m10s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [01m20s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Still creating... [01m30s elapsed][0m[0m
+[0m[1mmodule.vpc.aws_nat_gateway.NATGW_Custom_VPC[1]: Creation complete after 1m31s [id=nat-05c8e803146554d29][0m
+[0m[1maws_instance.bastion: Creating...[0m[0m
+[0m[1maws_instance.bastion: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_instance.bastion: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_instance.bastion: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_instance.bastion: Creation complete after 34s [id=i-0d15f4bc837dabd67][0m
+[0m[1mmodule.compute.aws_security_group.EC2-SG: Creating...[0m[0m
+[0m[1mmodule.compute.aws_security_group.EC2-SG: Creation complete after 3s [id=sg-02554da07bad769e7][0m
+[0m[1mmodule.vpc.aws_route_table.PrivateSubnet_RT[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table.PrivateSubnet_RT[0]: Creation complete after 2s [id=rtb-0fc4236b35c71b345][0m
+[0m[1mmodule.vpc.aws_route_table.PrivateSubnet_RT[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table.PrivateSubnet_RT[1]: Creation complete after 2s [id=rtb-05c096f3e4b5956fc][0m
+[0m[1mmodule.compute.aws_alb.App_LB: Creating...[0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [00m30s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [00m40s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [00m50s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [01m00s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [01m10s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [01m20s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [01m30s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [01m40s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [01m50s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [02m00s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [02m10s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [02m20s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [02m30s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [02m40s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [02m50s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [03m00s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [03m10s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [03m20s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [03m30s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Still creating... [03m40s elapsed][0m[0m
+[0m[1mmodule.compute.aws_alb.App_LB: Creation complete after 3m44s [id=arn:aws:elasticloadbalancing:ap-south-1:682033463215:loadbalancer/app/AWS-HA-App-AppLoadBalancer/a3add674ae7f2bc4][0m
+[0m[1mmodule.compute.aws_launch_template.EC2_Launch_Template: Creating...[0m[0m
+[0m[1mmodule.compute.aws_launch_template.EC2_Launch_Template: Creation complete after 6s [id=lt-046f04d98c5ba44e5][0m
+[0m[1mmodule.vpc.aws_route_table_association.PrivateSubnet_RTA[1]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table_association.PrivateSubnet_RTA[1]: Creation complete after 1s [id=rtbassoc-08195c15109348f8a][0m
+[0m[1mmodule.vpc.aws_route_table_association.PrivateSubnet_RTA[0]: Creating...[0m[0m
+[0m[1mmodule.vpc.aws_route_table_association.PrivateSubnet_RTA[0]: Creation complete after 0s [id=rtbassoc-0a34cd3d47a6b95fe][0m
+[0m[1mmodule.compute.aws_lb_listener.ALB-Listener: Creating...[0m[0m
+[0m[1mmodule.compute.aws_lb_listener.ALB-Listener: Creation complete after 1s [id=arn:aws:elasticloadbalancing:ap-south-1:682033463215:listener/app/AWS-HA-App-AppLoadBalancer/a3add674ae7f2bc4/0f19a9427d4fc34f][0m
+[0m[1mmodule.compute.aws_autoscaling_group.ASG-EC2: Creating...[0m[0m
+[0m[1mmodule.compute.aws_autoscaling_group.ASG-EC2: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.compute.aws_autoscaling_group.ASG-EC2: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.compute.aws_autoscaling_group.ASG-EC2: Still creating... [00m30s elapsed][0m[0m
+[0m[1mmodule.compute.aws_autoscaling_group.ASG-EC2: Creation complete after 40s [id=terraform-20251225093513316900000008][0m
+[0m[1mdata.aws_instances.asg_instances: Reading...[0m[0m
+[0m[1mdata.aws_instances.asg_instances: Read complete after 0s [id=ap-south-1][0m
+[0m[1m[32m
+Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
+[0m[0m[1m[32m
+Outputs:
+
+[0malb_dns_endpoint = "http://AWS-HA-App-AppLoadBalancer-807017697.ap-south-1.elb.amazonaws.com"
+bastion_public_ip = "52.66.213.37"
+jump_commands = [
+  "ssh -i AWS-HA-App-key.pem -J ec2-user@52.66.213.37 ec2-user@10.0.4.46",
+  "ssh -i AWS-HA-App-key.pem -J ec2-user@52.66.213.37 ec2-user@10.0.3.227",
+]
+private_instance_ips = tolist([
+  "10.0.4.46",
+  "10.0.3.227",
+])
+ssh_connect_command = "ssh -i AWS-HA-App-key.pem ec2-user@52.66.213.37"
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+
+[Pipeline] // ansiColor
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

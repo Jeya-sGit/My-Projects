@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'TF_ACTION', 
+               choices: ['plan', 'apply', 'destroy'], 
+               description: 'Select the Terraform action to perform')
+    }
+
+    options {
+        ansiColor('xterm')
+    }
+
+    environment {
+        TF_HOME = tool 'terraform'
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        TF_CLI_CONFIG_FILE = "D:\\Developer's Tool\\terraform.rc"
+        TF_PLUGIN_TIMEOUT = "15m"
+        TF_CLI_ARGS_plan = "-parallelism=1"
+        TF_CLI_ARGS_apply = "-parallelism=1"
+    }
+
+    stages {
+        stage('Terraform Init') {
+            steps {
+                dir('aws-deployment-bastion') {
+                    bat "\"${TF_HOME}\\terraform.exe\" init -upgrade"
+                }
+            }
+        }
+
+        stage('Terraform Action') {
+            steps {
+                dir('aws-deployment-bastion') {
+                    script {
+                        if (params.TF_ACTION == 'plan') {
+                            bat "\"${TF_HOME}\\terraform.exe\" plan -out=tfplan"
+                        } 
+                        else if (params.TF_ACTION == 'apply') {
+                            input message: "Apply these changes to AWS?", ok: "Proceed"
+                            bat "\"${TF_HOME}\\terraform.exe\" apply -auto-approve"
+                        } 
+                        else if (params.TF_ACTION == 'destroy') {
+                            input message: "ARE YOU SURE? This will delete all infra in AWS!", ok: "YES, NUKE IT"
+                            bat "\"${TF_HOME}\\terraform.exe\" destroy -auto-approve"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
